@@ -1,0 +1,33 @@
+name: Deploy Market Baron
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: market-baron-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to Hetzner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          script: |
+            set -e
+            cd /opt/marketbaron
+            git fetch origin main
+            git reset --hard origin/main
+            docker build -t market-baron .
+            docker rm -f market-baron 2>/dev/null || true
+            docker run -d --name market-baron --restart unless-stopped -p 8080:80 market-baron
+            docker image prune -f
