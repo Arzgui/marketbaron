@@ -18,21 +18,24 @@ function App() {
       name: 'Épicerie du quotidien',
       detail: 'Conserves, épices, chips et essentiels du placard',
       image: localPhotos[1],
-      imagePosition: 'center 38%',
+      imagePosition: 'center 70%',
+      imageScale: 1.28,
       tag: 'Dans vos placards',
     },
     {
       name: 'Boissons & gourmandises',
       detail: 'Café, thé, yerba maté, biscuits et bonbons',
       image: localPhotos[2],
-      imagePosition: 'center 46%',
+      imagePosition: '58% 58%',
+      imageScale: 1.22,
       tag: 'Pour la pause',
     },
     {
       name: 'Maison & soin',
       detail: 'Shampoings, parfums, essuie-tout et produits utiles',
       image: localPhotos[3],
-      imagePosition: 'center 42%',
+      imagePosition: '76% 34%',
+      imageScale: 1.25,
       tag: 'Tous les jours',
     },
   ]
@@ -66,9 +69,7 @@ function App() {
             <div className="hero-note"><span className="note-dot" /> Produits du quotidien, tout simplement</div>
           </div>
           <div className="hero-image-wrap">
-            <img src={localPhotos[0]} alt="Sélection de produits Market Baron" fetchPriority="high" />
-            <div className="hero-pvc-sign" aria-label="Market Baron"><span>MARKET</span><strong>BARON</strong><b aria-hidden="true">✦</b></div>
-            <div className="image-stamp"><span>Ouvert en</span><strong>2026</strong><span>septembre</span></div>
+            <img src={localPhotos[0]} alt="Façade et vitrine du Market Baron" fetchPriority="high" />
             <div className="image-caption"><span>01</span><span>La boutique du quartier</span></div>
           </div>
         </section>
@@ -87,7 +88,7 @@ function App() {
 
         <section className="selection-section" id="selection">
           <div className="section-heading"><div><div className="section-label">03 <span /> Dans nos rayons</div><h2>Les essentiels <em>du moment</em></h2></div><a className="circle-link" href="#contact" aria-label="Voir tous les produits">↗</a></div>
-          <div className="product-grid">{products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} style={{ objectPosition: product.imagePosition }} loading="lazy" decoding="async" /><span>{product.tag}</span></div><div className="product-info"><h3>{product.name}</h3><p>{product.detail}</p><span className="product-arrow">↗</span></div></article>)}</div>
+          <div className="product-grid">{products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={`${product.name}, vue des rayons Market Baron`} style={{ objectPosition: product.imagePosition, '--image-scale': product.imageScale }} loading="lazy" decoding="async" /><span>{product.tag}</span></div><div className="product-info"><h3>{product.name}</h3><p>{product.detail}</p><span className="product-arrow">↗</span></div></article>)}</div>
         </section>
 
         <section className="photo-journal" aria-label="Un aperçu de nos rayons">
