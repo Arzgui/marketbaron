@@ -10,24 +10,29 @@ const localPhotos = Object.entries(photoFiles)
   .sort(([first], [second]) => first.localeCompare(second))
   .map(([, url]) => url)
 
+const galleryPhotos = localPhotos.slice(4)
+
 function App() {
   const products = [
     {
       name: 'Épicerie du quotidien',
       detail: 'Conserves, épices, chips et essentiels du placard',
       image: localPhotos[1],
+      imagePosition: 'center 38%',
       tag: 'Dans vos placards',
     },
     {
       name: 'Boissons & gourmandises',
       detail: 'Café, thé, yerba maté, biscuits et bonbons',
       image: localPhotos[2],
+      imagePosition: 'center 46%',
       tag: 'Pour la pause',
     },
     {
       name: 'Maison & soin',
       detail: 'Shampoings, parfums, essuie-tout et produits utiles',
       image: localPhotos[3],
+      imagePosition: 'center 42%',
       tag: 'Tous les jours',
     },
   ]
@@ -61,7 +66,7 @@ function App() {
             <div className="hero-note"><span className="note-dot" /> Produits du quotidien, tout simplement</div>
           </div>
           <div className="hero-image-wrap">
-            <img src={localPhotos[0]} alt="Sélection de produits Market Baron" />
+            <img src={localPhotos[0]} alt="Sélection de produits Market Baron" fetchPriority="high" />
             <div className="hero-pvc-sign" aria-label="Market Baron"><span>MARKET</span><strong>BARON</strong><b aria-hidden="true">✦</b></div>
             <div className="image-stamp"><span>Ouvert en</span><strong>2026</strong><span>septembre</span></div>
             <div className="image-caption"><span>01</span><span>La boutique du quartier</span></div>
@@ -82,12 +87,12 @@ function App() {
 
         <section className="selection-section" id="selection">
           <div className="section-heading"><div><div className="section-label">03 <span /> Dans nos rayons</div><h2>Les essentiels <em>du moment</em></h2></div><a className="circle-link" href="#contact" aria-label="Voir tous les produits">↗</a></div>
-          <div className="product-grid">{products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><span>{product.tag}</span></div><div className="product-info"><h3>{product.name}</h3><p>{product.detail}</p><span className="product-arrow">↗</span></div></article>)}</div>
+          <div className="product-grid">{products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} style={{ objectPosition: product.imagePosition }} loading="lazy" decoding="async" /><span>{product.tag}</span></div><div className="product-info"><h3>{product.name}</h3><p>{product.detail}</p><span className="product-arrow">↗</span></div></article>)}</div>
         </section>
 
         <section className="photo-journal" aria-label="Un aperçu de nos rayons">
           <div className="photo-journal-heading"><div className="section-label light">Carnet de boutique <span /></div><h2>Des produits qui ont<br /><em>une histoire.</em></h2><p>Un aperçu de ce qui vous attend au quotidien, photographié directement dans nos rayons.</p></div>
-          <div className="photo-mosaic">{localPhotos.slice(4).map((photo, index) => <figure className={`mosaic-photo mosaic-photo-${index + 1}`} key={photo}><img src={photo} alt={`Produit Market Baron ${index + 1}`} /><figcaption>{String(index + 1).padStart(2, '0')}</figcaption></figure>)}</div>
+          <div className="photo-mosaic">{galleryPhotos.map((photo, index) => <figure className={`mosaic-photo mosaic-photo-${index + 1}`} key={photo}><img src={photo} alt={`Photo de rayon Market Baron ${index + 1}`} loading="lazy" decoding="async" /><figcaption>{String(index + 1).padStart(2, '0')}</figcaption></figure>)}</div>
         </section>
 
         <section className="services-section" id="services">
